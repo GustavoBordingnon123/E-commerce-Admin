@@ -25,14 +25,14 @@ export function MainNav({
             active: pathName === `/${params.storeId}/categories`
         },
         {
-            href:`/${params.storeId}/sizes`,
-            label:'Sizes',
-            active: pathName === `/${params.storeId}/sizes`
+            href:`/${params.storeId}/authors`,
+            label:'Authors',
+            active: pathName === `/${params.storeId}/authors`
         },
         {
-            href:`/${params.storeId}/colors`,
-            label:'Colors',
-            active: pathName === `/${params.storeId}/colors`
+            href:`/${params.storeId}/publishers`,
+            label:'Publishers',
+            active: pathName === `/${params.storeId}/publishers`
         },
         {
             href:`/${params.storeId}/products`,
