@@ -17,12 +17,11 @@ model Store {
   userId          String
   billboards      Billboard[] @relation("StoreToBillboard")
   categories      Category[] @relation("StoreToCategory")
-  // sizes           Size[]     @relation("StoreToSize")
-  // colors          Color[]     @relation("StoreToColor")
   authors         Author[]     @relation("StoreToAuthor")
   publishers      Publisher[]     @relation("StoreToPublisher")
   products        Product[]  @relation("StoreToProduct")
   orders          Order[]    @relation("StoreToOrder")
+  users           User[]     @relation("StoreToUser")
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
 }
@@ -39,10 +38,6 @@ model Product {
   description  String   @db.VarChar(5000)
   isFeatured  Boolean   @default(false)
   isArchived  Boolean   @default(false)
-  // sizeId      String    // Foreign Key to Size
-  // size        Size      @relation(fields: [sizeId], references: [id])
-  // colorId     String    // Foreign Key to color
-  // color       Color     @relation(fields: [colorId], references: [id])
   authorId    String    // Foreign Key to author
   author      Author    @relation(fields: [authorId], references: [id])
   publisherId String    // Foreign Key to publisher
@@ -54,8 +49,6 @@ model Product {
 
   @@index([storeId])
   @@index([categoryId])
-  // @@index([sizeId])
-  // @@index([colorId])
   @@index([authorId])
   @@index([publisherId])
 }
@@ -87,32 +80,6 @@ model Category {
   @@index([storeId])
   @@index([billboardId])
 }
-
-// model Size{
-//   id          String @id @default(uuid())
-//   storeId     String
-//   store       Store @relation("StoreToSize",fields: [storeId], references: [id])
-//   name        String
-//   value        String
-//   products    Product[] 
-//   createdAt   DateTime @default(now())
-//   updatedAt   DateTime @updatedAt
-
-//   @@index([storeId])
-// }
-
-// model Color{
-//   id          String @id @default(uuid())
-//   storeId     String
-//   store       Store @relation("StoreToColor",fields: [storeId], references: [id])
-//   name        String
-//   value        String
-//   products    Product[] 
-//   createdAt   DateTime @default(now())
-//   updatedAt   DateTime @updatedAt
-
-//   @@index([storeId])
-// }
 
 model Author{
   id          String @id @default(uuid())
@@ -179,4 +146,19 @@ model OrderItem{
 
   @@index([orderId])
   @@index([productId])
+}
+
+model User{
+  id String @id @default(uuid())
+  storeId     String
+  store       Store @relation("StoreToUser",fields: [storeId], references: [id])
+  email String @unique
+  password String
+  name String
+  cpf String
+  phone String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
 }

@@ -99,6 +99,7 @@ export async function GET(
     const authorId = searchParams.get('authorId') || undefined;
     const publisherId = searchParams.get('publisherId') || undefined;
     const isFeatured = searchParams.get('isFeatured');
+    const count = parseInt(searchParams.get('count') || '0', 10); // Valor padrão 0 se não fornecido
 
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
@@ -121,7 +122,8 @@ export async function GET(
       },
       orderBy: {
         createdAt: 'desc',
-      }
+      },
+      take: count > 0 ? count : undefined, // Adiciona a cláusula 'take' se count for maior que 0
     });
   
     return NextResponse.json(products);
